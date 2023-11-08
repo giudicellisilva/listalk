@@ -1,0 +1,36 @@
+.header{
+    padding: 12px 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__logo{
+        height: 42px;
+    }
+
+    &__button_login, &__button_register{
+        border: none;
+        padding: 14px 34px;
+        border-radius: 6px;
+    }
+
+    &__button_login{
+        background-color: #FFE8D6;
+        margin-right: 20px;
+
+        &:hover{
+            background-color: #ffbb87;
+            transition: all .4s;
+        }
+    }
+
+    &__button_register{
+        background-color: #FFBF68;
+
+        &:hover{
+            background-color: #ff9d15;
+            transition: all .4s;
+        }
+    }
+}
