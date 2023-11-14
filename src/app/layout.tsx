@@ -10,10 +10,10 @@ import { checkIsPublicRoute } from '@/functions/checkIsPublicRoute';
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata: Metadata = {
-  title: 'Listalk',
-  description: 'An NextJS demo app',
-}
+// export const metadata: Metadata = {
+//   title: 'Listalk',
+//   description: 'An NextJS demo app',
+// }
 
 export default function RootLayout({
   children,
