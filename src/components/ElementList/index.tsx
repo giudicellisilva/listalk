@@ -6,6 +6,7 @@ interface ListElementProps {
     content: string;
     showDeleteIcon: boolean;
     isClickable: boolean;
+    onDeleteButtonClick: () => void;
 }
 
 const ListElement = (props: ListElementProps) => {
@@ -16,6 +17,7 @@ const ListElement = (props: ListElementProps) => {
         <div className={`${style.elementList} ${clickableClass}`}>
             {props.showDeleteIcon && 
                 <Image className={style.elementList__icon}
+                    onClick={props.onDeleteButtonClick}
                     src={close}
                     alt="Icone de deleção"
                     width={15}
