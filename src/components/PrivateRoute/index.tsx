@@ -1,7 +1,8 @@
 
-import { postToken } from "@/api/token/postToken";
+import { postLogin } from "@/api/login/postLogin";
 import { ReactNode, useEffect } from "react";
 import { useMutation } from "react-query";
+import api from "@/api/http-common";
 
 interface PrivateRouteProps{
     children: ReactNode;
@@ -9,24 +10,25 @@ interface PrivateRouteProps{
 
 const PrivateRoute = (props: PrivateRouteProps) =>{
     
-    useEffect(() =>{
-        mutate();
-    }, []);
+    // useEffect(() =>{
+    //     mutate();
+    // }, []);
 
-    const {status, mutate} = useMutation(
-        async () =>{
-            return postToken();
-        },
-        {
-            onSuccess: (res) =>{
-                console.log(res.data);
-            },
+    // const {status, mutate} = useMutation(
+    //     async () =>{
+    //         return postToken();
+    //     },
+    //     {
+    //         onSuccess: (res) =>{
+    //             api.defaults.headers.authorization = `Bearer ${res.data.access_token}`;
 
-            onError: (erro) =>{
-                console.log(erro);
-            }
-        }
-    )
+    //         },
+
+    //         onError: (erro) =>{
+    //             console.log(erro);
+    //         }
+    //     }
+    // )
 
 
     return(
