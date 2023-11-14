@@ -1,3 +1,4 @@
+import ListElement from "../ElementList";
 import Footer from "./Footer";
 import Header from "./Header";
 import style from "./home.module.scss";
@@ -5,7 +6,6 @@ import style from "./home.module.scss";
 const Home = () =>{
     return(
         <div className={style.home}>
-            <Header/>
             <div className={style.home__content}>
                 <div className={style.home__content__div}>
                     <h1 className={style.home__content__title} >LIST<span>ALK</span></h1>

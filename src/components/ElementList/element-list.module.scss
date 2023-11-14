@@ -1,0 +1,26 @@
+.elementList {
+  padding: 10px;
+  background-color: rgba(217, 217, 217, 0.38);
+  border-radius: 16px;
+  max-width: 200px;
+  height: 30px;
+
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  gap: 30px;
+
+  &__icon {
+    cursor: pointer
+  }
+}
+
+.elementListContent {
+  margin-top: 8px;
+  text-align: center;
+  width: 100%;
+}
+
+.clickable {
+  cursor: pointer;
+}
