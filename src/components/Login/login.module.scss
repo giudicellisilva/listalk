@@ -58,6 +58,10 @@
             }
         }
 
+        &_errorLogin{
+            color: red;
+        }
+
         &__button_login{
             background-color: #FF9F1C;
             padding: 12px 32px;
@@ -65,6 +69,18 @@
             border-radius: 6px;
             position: relative;
             left: 124px;
+            font-size: 16px;
+            font-weight: 600;
+
+
+            &:hover{
+                transition: all .4s;
+                background-color: #ffa01c41;
+            }
+        }
+
+        .active{
+            background-color: #ffa01c41;  
         }
     }
 }

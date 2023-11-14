@@ -33,7 +33,7 @@ const Login = (props: LoginProps) =>{
         <BackgroundDropdown>
             <div className={style.login}>
                 <div className={style.login__title}>
-                    <h2 className={style.title}>Welcome back!{status}</h2>
+                    <h2 className={style.title}>Welcome back!</h2>
                     <h3 className={style.subtitle}>Your organized world awaits...</h3>
                 </div>
                 <div className={style.login__content}>
@@ -46,7 +46,8 @@ const Login = (props: LoginProps) =>{
                         <p>Password Adress</p>
                         <input type="password" name="password" placeholder="Enter a strong password" onChange={(e) => setPasseword(e.target.value)} value={password} />
                     </label>
-                    <button className={style.login__content__button_login} onClick={() => mutate()}>Login</button>
+                    {status === "error" ? <p className={style.login__content_errorLogin}>Erro no login...</p> : false}
+                    <button className={`${style.login__content__button_login} ${status === "loading" || status === "success" ? style.active: ""}`} onClick={() => mutate()}>Login</button>
                 </div>
             </div>
         </BackgroundDropdown>

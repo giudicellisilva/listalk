@@ -5,6 +5,8 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import PrivateRoute from '@/components/PrivateRoute'
 import Provider from '@/components/Provider';
+import { usePathname } from 'next/navigation';
+import { checkIsPublicRoute } from '@/functions/checkIsPublicRoute';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -13,11 +15,19 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+
+  const pathName = usePathname();
+  const isPlublicPage = checkIsPublicRoute(pathName)
   return (
     <html lang="en">
       <body className={inter.className}>
         <Provider>
-          <PrivateRoute>{children}</PrivateRoute>
+          {isPlublicPage && children}
+          {!isPlublicPage && (
+            <PrivateRoute>
+              {children}
+            </PrivateRoute>
+          )}
         </Provider>
       </body>
     </html>
