@@ -1,0 +1,122 @@
+.inputText {
+  border-radius: 6px;
+
+  &:focus { 
+  outline: none;
+  }
+}
+
+.newList {
+  padding: 50px;
+  height: 80vh;
+  width: 90%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &__infos {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+
+  &__title {
+    color: #FFBF68;
+    border: none;
+    font-size: 56px;
+    font-weight: 700;
+
+    &:focus {
+      &::placeholder {
+        color: transparent;
+      }
+    }
+
+    &::placeholder {
+      color: #FFBF68;
+    }
+  }
+
+  &__description {
+    color: 000;
+    border: none;
+    font-size: 18px;
+    width: 60%;
+
+    &:focus {
+      &::placeholder {
+        color: transparent;
+      }
+    }
+  }
+
+  &__form {
+    display: flex;
+    justify-content: space-between;
+
+    &__buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+  }
+
+  &__listItem {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    &__content{
+      display: flex;
+      gap: 10px;
+
+      &__input {
+        border: 1px #FFBF68 solid;
+        background-color:rgba(241, 241, 241, 0.29);
+        height: 22px;
+        padding: 10px;
+        width: 80%;
+      }
+    }
+
+    &__category {
+      border: 1px #FFBF68 solid;
+      background-color:rgba(241, 241, 241, 0.29);
+      height: 40px;
+      padding: 10px;
+      width: 81.50%;
+    }
+  }
+
+  &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 150px;
+    height: 50px;
+    padding: 18px 44px;
+    border: none;
+    border-radius: 6px;
+
+    background-color: #FFBF68;
+
+    &:hover {
+      filter: brightness(92%);
+    }
+  }
+}
+
+#cancelButton {
+  background-color: rgba(255, 28, 28, 0.66);
+}
+
+#addItem {
+  height: 22px;
+  width: 22px;
+  padding: 18px;
+}
