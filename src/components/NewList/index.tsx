@@ -53,20 +53,20 @@ const ListForm = () => {
     }
 
     return(
-        <div>
-            <div> 
-              <input 
+        <div className={style.newList}>
+            <div className={style.newList__infos}> 
+              <input className={`${style.newList__title} ${style.inputText}`}
                 placeholder="Edit the name list..." 
                 value={listTitle}
                 onChange={(e) => setListTitle(e.target.value)}/>
 
-              <input 
+              <input className={`${style.newList__description} ${style.inputText}`}
                 placeholder="Add a description to your list here" 
                 value={listDescription}
                 onChange={(e) => setListDescription(e.target.value)}/>
             </div>
 
-            <div>
+            
             {listItems.map((item: ListItem, index: number) => (
                 <ListElement 
                     key={index}
@@ -76,38 +76,52 @@ const ListForm = () => {
                     onDeleteButtonClick={() => removeItemFromList(index)}
                 />
             ))}
-            </div>
+            
 
-            <div> 
-                <input 
-                placeholder="Enter another item to your list"
-                value={itemContent}
-                onChange={(e) => setItemContent(e.target.value)}
-                />
-                <button onClick={addItemToList}>
-                    <Image
-                        src={check}
-                        alt="Adicionar item à lista"
-                        width={15}
-                        height={15}
-                    />
-                </button>
-              </div>
-              <div> 
-                <select 
-                name="category" id="category"
-                value={itemCategory} 
-                onChange={(e) => setItemCategory(e.target.value)}
-                >
-                    <option value="movies">Movie</option>
-                </select>
-              </div>
+            <div className={style.newList__form}> 
+                <div className={style.newList__listItem}> 
+                    <div className={style.newList__listItem__content}> 
+                        <input className={`${style.newList__listItem__content__input} ${style.inputText}`}
+                        placeholder="Enter another item to your list"
+                        value={itemContent}
+                        onChange={(e) => setItemContent(e.target.value)}
+                        />
+                        <button onClick={addItemToList} 
+                        className={style.newList__button}
+                        id={style.addItem}
+                        >
+                            <Image
+                                src={check}
+                                alt="Adicionar item à lista"
+                                width={15}
+                                height={15}
+                            />
+                        </button>
+                    </div>
+                
+                    <div> 
+                        <select className={`${style.newList__listItem__category} ${style.inputText}`}
+                        name="category" id="category"
+                        value={itemCategory} 
+                        onChange={(e) => setItemCategory(e.target.value)}
+                        >
+                            <option value="movies">Movie</option>
+                        </select>
+                    </div>
+                </div>
 
-              <div> 
-                <button>Cancel</button>
-                <button onClick={saveList}>Save list</button>
-              </div>
+                <div className={style.newList__form__buttons}> 
+                    <button className={style.newList__button} id={style.cancelButton}> 
+                        <span> Cancel </span>
+                    </button>
+                    <button className={style.newList__button}
+                    onClick={saveList}>
+                        <span> Save list </span>
+                    </button>
+                </div>
+            </div> 
         </div>
+
     )
 }
 
