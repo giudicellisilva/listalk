@@ -4,6 +4,8 @@ import style from "./login.module.scss";
 import { useMutation } from "react-query";
 import api from "@/api/http-common";
 import { postLogin } from "@/api/login/postLogin";
+import { useRouter } from "next/navigation";
+import { APP_ROUTES } from "@/constants/app-routes";
 
 interface LoginProps{
     setVisibileLogin: (set: boolean)  => void;
@@ -12,6 +14,7 @@ interface LoginProps{
 const Login = (props: LoginProps) =>{
     const [login, setLogin] = useState("");
     const [password, setPasseword] = useState("");
+    const {push} = useRouter();
 
     const {status, mutate} = useMutation(
         async () =>{
@@ -20,7 +23,7 @@ const Login = (props: LoginProps) =>{
         {
             onSuccess: (res) =>{
                 api.defaults.headers.authorization = `Bearer ${res.data.access_token}`;
-
+                push(APP_ROUTES.private.dashboard.name);
             },
 
             onError: (erro) =>{

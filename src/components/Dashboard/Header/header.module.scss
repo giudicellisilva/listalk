@@ -1,0 +1,29 @@
+.header{
+    padding: 12px 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__logo{
+        height: 42px;
+    }
+
+    &__userLogin{
+        background-color: transparent;
+
+        border: 2px solid#FF9F1C;
+        border-radius: 50%;
+
+        img{
+            height: 32px;
+        }
+        
+        &__dropdown{
+            position: absolute;
+            top: 70px;
+            right: 10px;
+        }
+    }
+
+}
