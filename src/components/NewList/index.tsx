@@ -1,3 +1,5 @@
+"use client";
+
 import style from "./new-list.module.scss";
 import Image from 'next/image';
 import check from '../../../public/assets/check-icon.svg';
@@ -14,6 +16,7 @@ interface List {
     title: string;
     description: string
 }
+
 
 const ListForm = () => {
     let categories: string[] = []; /* esse array vai ter as categorias, 

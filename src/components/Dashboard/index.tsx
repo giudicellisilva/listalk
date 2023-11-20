@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ListElement from "../ElementList";
 import Header from "./Header";
 import style from "./dashboard.module.scss";
@@ -7,6 +7,10 @@ import { getList } from "@/api/list/getList";
 
 const Dashboard = () =>{
     const [elementsList, setElementsList] = useState([]);
+
+    useEffect(() => {
+        mutate();
+      },[]);
 
     const {status, mutate} = useMutation(
         async () =>{
@@ -28,8 +32,9 @@ const Dashboard = () =>{
         <div className={style.dashboard}> 
             <Header />
             <h2 className={style.dashboard__title}>Your lists</h2>
-            <button onClick={() => mutate()}>Teste</button>
             <div className={style.dashboard__content}>
+            <ListElement content="aa" showDeleteIcon={false}  isClickable={false} onDeleteButtonClick={() => console.log("ss")} />
+
                 {elementsList.map((list) =>{
                     return(
                         <ListElement content="aa" showDeleteIcon={false}  isClickable={false} onDeleteButtonClick={() => console.log("ss")} />

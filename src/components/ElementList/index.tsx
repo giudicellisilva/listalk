@@ -1,6 +1,7 @@
 import style from './element-list.module.scss';
 import Image from "next/image";
 import close from '../../../public/assets/close-icon.svg';
+import { useRouter } from 'next/navigation';
 
 interface ListElementProps {
     content: string;
@@ -10,11 +11,16 @@ interface ListElementProps {
 }
 
 const ListElement = (props: ListElementProps) => {
+    const {push} = useRouter();
 
     const clickableClass = props.isClickable ? style.clickable : '';
 
+    function routeListeelement(): void{
+        push(`/dashboard/list/${1}`)
+    }
+
     return(
-        <div className={`${style.elementList} ${clickableClass}`}>
+        <div className={`${style.elementList} ${clickableClass}`} onClick={() => routeListeelement()}>
             {props.showDeleteIcon && 
                 <Image className={style.elementList__icon}
                     onClick={props.onDeleteButtonClick}

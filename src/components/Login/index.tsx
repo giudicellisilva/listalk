@@ -22,6 +22,7 @@ const Login = (props: LoginProps) =>{
         },
         {
             onSuccess: (res) =>{
+                console.log(res)
                 api.defaults.headers.authorization = `Bearer ${res.data.access_token}`;
                 push(APP_ROUTES.private.dashboard.name);
             },

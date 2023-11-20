@@ -9,21 +9,48 @@
         height: 42px;
     }
 
-    &__userLogin{
+    &__buttonUserLogin{
         background-color: transparent;
-
-        border: 2px solid#FF9F1C;
+        height: 50px;
+        padding: 5px;
+        margin: 0;
+        border: 2px solid #FF9F1C;
         border-radius: 50%;
+
+        
+        img{
+            height: 100%;
+        }
+    }
+
+    &__userLogin{
+        width: 100px;
+        height: 130px;
+        padding: 12px;
+        background-color:#FF9F1C;
+        position: absolute;
+        top: 70px;
+        right: 10px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: column;
+        gap: 12px;
 
         img{
             height: 32px;
         }
-        
-        &__dropdown{
-            position: absolute;
-            top: 70px;
-            right: 10px;
+
+        button{
+            background-color: #FFBF68;
+            color: white;
+            border: #FFBF68;
+            border-radius: 6px;
+            padding: 5px 12px;
+
         }
+        
     }
 
 }
