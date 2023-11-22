@@ -49,7 +49,6 @@ const NewList = (props: NewListProps) =>{
         },
         {
             onSuccess: (res) =>{
-                console.log("new", res.data)
             },
 
             onError: (error) =>{
@@ -72,6 +71,7 @@ const NewList = (props: NewListProps) =>{
     //         }
     //     }
     // )
+    
     function ListCreate(){
         mutateNewList();
         setVisible(true);

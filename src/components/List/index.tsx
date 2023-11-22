@@ -9,6 +9,9 @@ import { getList } from "@/api/list/getList";
 import { getItens } from "@/api/item/getItems";
 import { postItens } from "@/api/item/postItem";
 import ElementItem from "../ElementItem";
+import { getCategory } from "@/api/category/getCategory";
+import { updateList } from "@/api/list/updateList";
+import DropdownLoading from "../DropdownLoading";
 
 interface ListItem {
     id: string;
@@ -26,20 +29,26 @@ interface ListProps{
     id: string | string[] | undefined;
 }
 
+interface category{
+    id: string;
+    name: string;
+}
+
 const List = (props: ListProps) => {
-    let categories: string[] = []; /* esse array vai ter as categorias, 
-    vai ter que pegar do endpoint que retorne essas categorias */
+    const [categories, setCategories] = useState<category[]>();
+    const [listItems, setListItems] = useState<ListItem[]>([]);
 
     const [listTitle, setListTitle] = useState('');
     const [listDescription, setListDescription] = useState('');
+    const [listCategory, setListCategory] = useState('movies');
 
-    let [listItems, setListItems] = useState<ListItem[]>([]); // esse array vai ser enviado para o endpoint na criação da lista
-    
     const [itemContent, setItemContent] = useState('');
-    const [itemCategory, setItemCategory] = useState('movies');
+
+    const [visible, setVisible] = useState(false);
 
 
     useEffect(() => {
+        mutateCategory();
         mutate();
         mutateItem();
       },[]);
@@ -52,6 +61,22 @@ const List = (props: ListProps) => {
             onSuccess: (res) =>{
                 setListTitle(res.data.name);
                 setListDescription(res.data.description);
+                setListCategory(res.data.category.id)
+            },
+
+            onError: (error) =>{
+                console.log(error);
+            }
+        }
+    )
+
+    const {status: statusUpdateList, mutate: mutateUpdateList} = useMutation(
+        async () =>{
+            return updateList(props.id, listTitle, listDescription, listCategory);
+        },
+        {
+            onSuccess: (res) =>{
+                console.log(res.data)
             },
 
             onError: (error) =>{
@@ -82,7 +107,6 @@ const List = (props: ListProps) => {
         },
         {
             onSuccess: (res) =>{
-                console.log(res.data);
                 mutateItem();
                 setItemContent("");
             },
@@ -107,38 +131,34 @@ const List = (props: ListProps) => {
         }
     )
 
+    const {status: statusCategory, mutate: mutateCategory} = useMutation(
+        async () =>{
+            return getCategory();
+        },
+        {
+            onSuccess: (res) =>{
+                setCategories(res.data)
+            },
 
-
-    function addItemToList(): void {
-        const newItem: ListItem = {
-            id: "Aa",
-            category: itemCategory,
-            content: itemContent,
-        };
-        
-        setListItems(oldItems => [...oldItems, newItem]);
-    }
-
-    function removeItemFromList(indexToRemove: number): void {
-        setListItems(oldItems => oldItems.filter((_, index) => index !== indexToRemove));
-    }
-
-    function saveList(): void {
-        const newList: List = {
-            items: listItems,
-            title: listTitle,
-            description: listDescription
-        };
-
-        console.log(newList)
-        
-        // enviar aqui essa lista para o endpoint
-    }
+            onError: (error) =>{
+                console.log(error)
+            }
+        }
+    )
 
     const getEnter = (e: any) =>{
         if(e.key === "Enter"){
             mutateNewItem();
         }
+    }
+
+    function callUpdateList(){
+        mutateUpdateList();
+        setVisible(true);
+    }
+
+    function updatedList(){
+        setVisible(false);
     }
 
     return(
@@ -194,22 +214,27 @@ const List = (props: ListProps) => {
                     <div> 
                         <select className={`${style.newList__listItem__category} ${style.inputText}`}
                         name="category" id="category"
-                        value={itemCategory} 
-                        onChange={(e) => setItemCategory(e.target.value)}
+                        value={listCategory} 
+                        onChange={(e) => setListCategory(e.target.value)}
                         >
-                            <option value="movies">Movie</option>
+                            {categories?.map((category) =>{
+                                return(
+                                    <option key={category.id} value={category.id}>{category.name}</option>
+                                )
+                            })}
+                            
                         </select>
                     </div>
                 </div>
 
                 <div className={style.newList__form__buttons}> 
-                    <button className={style.newList__button} id={style.cancelButton}> 
+                    <button className={style.newList__button} id={style.cancelButton} onClick={() => mutate()}> 
                         <span> Cancel </span>
                     </button>
-                    <button className={style.newList__button}
-                    onClick={saveList}>
+                    <button className={style.newList__button} onClick={() => callUpdateList()}>
                         <span> Save list </span>
                     </button>
+                    {visible && <DropdownLoading status={statusUpdateList} operationCompleted={updatedList} />}
                 </div>
             </div> 
         </div>

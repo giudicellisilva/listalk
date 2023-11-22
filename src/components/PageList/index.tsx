@@ -28,7 +28,6 @@ const PageList = () =>{
         {
             onSuccess: (res) =>{
                 setElementsList(res.data);
-                console.log("data", res.data)
             },
 
             onError: (error) =>{
