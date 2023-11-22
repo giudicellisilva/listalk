@@ -1,34 +1,26 @@
-import style from './element-list.module.scss';
+import style from "./elementItem.module.scss";
 import {useState} from "react"
 import Image from "next/image";
 import close from '../../../public/assets/close-icon.svg';
-import { useRouter } from 'next/navigation';
 import { useMutation } from 'react-query';
-import { deleteList } from '@/api/list/deleteList';
 import DropdownLoading from '../DropdownLoading';
 import Confirmation from '../Confirmation';
+import { deleteItem } from '@/api/item/deleteItem';
 
-interface ElementListProps {
-    id: string;
+interface ElementItemProps {
+    idList: string | string[] | undefined;
+    idItem: string;
     content: string;
-    isClickable: boolean;
-    loadingLists: () => void;
+    loadingItens: () => void;
 }
 
-const ElementList = (props: ElementListProps) => {
-    const { push } = useRouter();
+const ElementItem = (props: ElementItemProps) => {
     const [visible, setVisible] = useState(false);
     const [visibleConfirmation, setConfirmationVisible] = useState(false);
 
-    const clickableClass = props.isClickable ? style.clickable : '';
-
-    function routeListeelement(): void {
-        push(`/list/${props.id}`)
-    }
-
     const {status, mutate} = useMutation(
         async () =>{
-            return deleteList(props.id);
+            return deleteItem(props.idList, props.idItem);
         },
         {
             onSuccess: (res) =>{
@@ -41,18 +33,18 @@ const ElementList = (props: ElementListProps) => {
         }
     )
 
-    function deletedList(){
-        props.loadingLists();
+    function deletedItem(){
+        props.loadingItens();
         setVisible(false);
     }
 
 
     return (
-        <div className={style.elementList} >
-            <span className={`${style.elementListContent} ${clickableClass}`} onClick={() => props.isClickable? routeListeelement(): false}>
+        <div className={style.elementItem} >
+            <span className={style.elementItem_content}>
                 {props.content}
             </span>
-            <Image className={style.elementList__icon}
+            <Image className={style.elementItem__icon}
                 onClick={() => setConfirmationVisible(true)}
                 src={close}
                 alt="Icone de deleção"
@@ -60,9 +52,9 @@ const ElementList = (props: ElementListProps) => {
                 height={18}
             />
             {visibleConfirmation && <Confirmation confirmação={mutate} cancelamento={setConfirmationVisible} setLoading={setVisible} />}
-            {visible && <DropdownLoading status={status} operationCompleted={deletedList} />}
+            {visible && <DropdownLoading status={status} operationCompleted={deletedItem} />}
         </div>
     )
 }
 
-export default ElementList;
+export default ElementItem;

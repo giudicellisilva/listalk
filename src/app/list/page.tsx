@@ -1,10 +1,10 @@
 "use client";
     
-import Dashboard from "@/components/Dashboard";
+import PageList from "@/components/PageList";
 
 const Page = () =>{
     return(
-        <Dashboard />
+        <PageList />
     )
 }
 

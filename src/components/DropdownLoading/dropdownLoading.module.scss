@@ -1,0 +1,31 @@
+.dropdownLoading{
+    width: 300px;
+    height: 200px;
+
+    background-color: #D9D9D9;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    position: absolute;
+
+    &__button{
+        position: absolute;
+        top: 5px;
+        right: 7px;
+        background-color: transparent;
+        border: none;
+    }
+
+    &__img_close{
+        height: 32px;
+    }
+
+    &__img{
+        height: 64px;
+    }
+
+
+}

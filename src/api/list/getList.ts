@@ -1,5 +1,5 @@
 import api from "@/api/http-common";
 
-export async function getList(){
-    return await api.get("/myList")
+export async function getList(id: string | string[] | undefined){
+    return await api.get(`/myList/${id}`)
 }  

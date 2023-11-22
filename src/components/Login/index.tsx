@@ -6,6 +6,7 @@ import api from "@/api/http-common";
 import { postLogin } from "@/api/login/postLogin";
 import { useRouter } from "next/navigation";
 import { APP_ROUTES } from "@/constants/app-routes";
+import { setStorageItem } from "@/utils/localStore";
 
 interface LoginProps{
     setVisibileLogin: (set: boolean)  => void;
@@ -22,9 +23,10 @@ const Login = (props: LoginProps) =>{
         },
         {
             onSuccess: (res) =>{
-                console.log(res)
+                console.log(res.data)
                 api.defaults.headers.authorization = `Bearer ${res.data.access_token}`;
-                push(APP_ROUTES.private.dashboard.name);
+                console.log(setStorageItem("token", res.data.access_token))
+                push(APP_ROUTES.private.list.name);
             },
 
             onError: (erro) =>{
@@ -32,6 +34,12 @@ const Login = (props: LoginProps) =>{
             }
         }
     )
+
+    const getEnter = (e: any) =>{
+        if(e.key === "Enter"){
+            mutate();
+        }
+    }
 
     return(
         <BackgroundDropdown>
@@ -48,7 +56,7 @@ const Login = (props: LoginProps) =>{
                     </label>
                     <label htmlFor="password" className={style.login__content__label}>
                         <p>Password Adress</p>
-                        <input type="password" name="password" placeholder="Enter a strong password" onChange={(e) => setPasseword(e.target.value)} value={password} />
+                        <input type="password" name="password" placeholder="Enter a strong password" onChange={(e) => setPasseword(e.target.value)} value={password} onKeyUp={getEnter}/>
                     </label>
                     {status === "error" ? <p className={style.login__content_errorLogin}>Erro no login...</p> : false}
                     <button className={`${style.login__content__button_login} ${status === "loading" || status === "success" ? style.active: ""}`} onClick={() => mutate()}>Login</button>

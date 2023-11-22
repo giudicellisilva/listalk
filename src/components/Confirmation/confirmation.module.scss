@@ -1,0 +1,59 @@
+.confirmation{
+    width: 400px;
+    height: 300px;
+    background-color: #D9D9D9;
+    
+    border: 2px solid #FF9F1C;
+    border-radius: 12px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    &__alert{
+        height: 127px;
+    }
+
+    &__text_confirma{
+        color: black;
+        font-size: 20px;
+    }
+
+    &__text_alert{
+        color: gray;
+    }
+
+    &__buttons{
+        display: flex;
+        justify-content: center;
+        gap: 37px;
+
+        button{
+            color: white;
+            border: none;
+            border-radius: 7px;
+            padding: 13px 33px;
+    
+            &:hover{
+                transform: scale(1.05);
+                transition: all .4s;
+            }
+
+        }
+
+        &___cancelar{
+            background-color: gray;
+        }
+        
+
+        &___confirmar{
+            background-color: #E00707;
+        }
+    }
+
+
+
+
+
+}
