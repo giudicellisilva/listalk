@@ -98,13 +98,16 @@ const NewList = (props: NewListProps) =>{
                     <p>Description</p>
                     <input type="text" name="description" placeholder="Description" onChange={(e) => setDescription(e.target.value)} value={description} />
                 </label>
-                <select name="" id="" value={category} onChange={(e) => setCategory(e.target.value)}>
-                    {dataCategory.map((option) =>{
-                        return(
-                            <option key={option.id} value={option.id}>{option.name}</option>
-                        )
-                    })}
-                </select>
+                <label htmlFor="" className={style.newList__label}>
+                    <p>Category</p>
+                    <select name="" id="" className={style.newList__category} value={category} onChange={(e) => setCategory(e.target.value)}>
+                        {dataCategory.map((option) =>{
+                            return(
+                                <option key={option.id} value={option.id}>{option.name}</option>
+                            )
+                        })}
+                    </select>
+                </label>
                 {/* {status === "error" ? <p className={style.newList_errorLogin}>Erro no login...</p> : false} */}
                 <button className={`${style.newList__button_create} `} onClick={() => ListCreate()}>Create</button>
                 {/* <input type="text" onChange={(e) => setName(e.target.value)} value={name} />

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import ElementList from "../ElementList";
-import Header from "./Header";
 import style from "./pageList.module.scss";
 import { useMutation } from "react-query";
 import { getLists } from "@/api/list/getLists";
 import NewList from "../NewList";
+import Header from "../Header";
 
 interface ElementList{
     id: string;

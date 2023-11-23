@@ -1,7 +1,12 @@
 import {useState} from "react";
 import style from "./header.module.scss";
+import { useMutation } from "react-query";
+import { postLogout } from "@/api/login/postLogout";
+import { removeStorageItem } from "@/utils/localStore";
+import { useRouter } from "next/navigation";
 
 const Header = () =>{
+    const {push} = useRouter();
     const [visible, setVisible] = useState(false);
 
     function visibleOrnotvisible(){
@@ -11,6 +16,28 @@ const Header = () =>{
             setVisible(!visible);
         }
     }
+
+    const { status, mutate } = useMutation(
+        async () => {
+            return postLogout();
+        },
+        {
+            onSuccess: (res) => {
+                console.log(res.data)
+            },
+
+            onError: (error) => {
+                console.log(error);
+            }
+        }
+    )
+
+    function logout(){
+        removeStorageItem("token");
+        push("/");
+
+    }
+
     return(
         <header className={style.header}>
             <img className={style.header__logo} src="/assets/pencil.svg" alt="icon pencil" />
@@ -19,7 +46,7 @@ const Header = () =>{
             </button>
             {visible ? <div className={style.header__userLogin}>
                 <img src="/assets/User.svg" alt="" />
-                <button>Logout</button>
+                <button onClick={logout}>Logout</button>
             </div> : false}
   
         </header>

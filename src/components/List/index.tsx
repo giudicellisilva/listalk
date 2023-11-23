@@ -12,6 +12,7 @@ import ElementItem from "../ElementItem";
 import { getCategory } from "@/api/category/getCategory";
 import { updateList } from "@/api/list/updateList";
 import DropdownLoading from "../DropdownLoading";
+import Header from "@/components/Header";
 
 interface ListItem {
     id: string;
@@ -25,11 +26,11 @@ interface List {
     description: string
 }
 
-interface ListProps{
+interface ListProps {
     id: string | string[] | undefined;
 }
 
-interface category{
+interface category {
     id: string;
     name: string;
 }
@@ -51,193 +52,196 @@ const List = (props: ListProps) => {
         mutateCategory();
         mutate();
         mutateItem();
-      },[]);
-    
-    const {status, mutate} = useMutation(
-        async () =>{
+    }, []);
+
+    const { status, mutate } = useMutation(
+        async () => {
             return getList(props.id);
         },
         {
-            onSuccess: (res) =>{
+            onSuccess: (res) => {
                 setListTitle(res.data.name);
                 setListDescription(res.data.description);
                 setListCategory(res.data.category.id)
             },
 
-            onError: (error) =>{
+            onError: (error) => {
                 console.log(error);
             }
         }
     )
 
-    const {status: statusUpdateList, mutate: mutateUpdateList} = useMutation(
-        async () =>{
+    const { status: statusUpdateList, mutate: mutateUpdateList } = useMutation(
+        async () => {
             return updateList(props.id, listTitle, listDescription, listCategory);
         },
         {
-            onSuccess: (res) =>{
-                console.log(res.data)
+            onSuccess: (res) => {
             },
 
-            onError: (error) =>{
+            onError: (error) => {
                 console.log(error);
             }
         }
     )
 
-    const {status: statusItem, mutate: mutateItem} = useMutation(
-        async () =>{
+    const { status: statusItem, mutate: mutateItem } = useMutation(
+        async () => {
             return getItens(props.id);
         },
         {
-            onSuccess: (res) =>{
-                console.log(res.data);
+            onSuccess: (res) => {
                 setListItems(res.data)
             },
 
-            onError: (error) =>{
+            onError: (error) => {
                 console.log(error);
             }
         }
     )
 
-    const {status: statusNewItem, mutate: mutateNewItem} = useMutation(
-        async () =>{
+    const { status: statusNewItem, mutate: mutateNewItem } = useMutation(
+        async () => {
             return postItens(props.id, itemContent);
         },
         {
-            onSuccess: (res) =>{
+            onSuccess: (res) => {
                 mutateItem();
                 setItemContent("");
             },
 
-            onError: (error) =>{
+            onError: (error) => {
                 console.log(error);
             }
         }
     )
 
-    const {status: statusDeleteItem, mutate: mutateDeleteItem} = useMutation(
-        async () =>{
+    const { status: statusDeleteItem, mutate: mutateDeleteItem } = useMutation(
+        async () => {
             return postItens(props.id, itemContent);
         },
         {
-            onSuccess: (res) =>{
+            onSuccess: (res) => {
             },
 
-            onError: (error) =>{
+            onError: (error) => {
                 console.log(error);
             }
         }
     )
 
-    const {status: statusCategory, mutate: mutateCategory} = useMutation(
-        async () =>{
+    const { status: statusCategory, mutate: mutateCategory } = useMutation(
+        async () => {
             return getCategory();
         },
         {
-            onSuccess: (res) =>{
+            onSuccess: (res) => {
                 setCategories(res.data)
             },
 
-            onError: (error) =>{
+            onError: (error) => {
                 console.log(error)
             }
         }
     )
 
-    const getEnter = (e: any) =>{
-        if(e.key === "Enter"){
+    const getEnter = (e: any) => {
+        if (e.key === "Enter") {
             mutateNewItem();
         }
     }
 
-    function callUpdateList(){
+    function callUpdateList() {
         mutateUpdateList();
         setVisible(true);
     }
 
-    function updatedList(){
+    function updatedList() {
         setVisible(false);
     }
 
-    return(
+    return (
         <div className={style.newList}>
-            <div className={style.newList__infos}> 
-              <input className={`${style.newList__title} ${style.inputText}`}
-                placeholder="Edit the name list..." 
-                value={listTitle}
-                onChange={(e) => setListTitle(e.target.value)}/>
+            <Header />
+            <div className={style.newList__content}>
 
-              <input className={`${style.newList__description} ${style.inputText}`}
-                placeholder="Add a description to your list here" 
-                value={listDescription}
-                onChange={(e) => setListDescription(e.target.value)}/>
-            </div>
+                <div className={style.newList__content__infos}>
+                    <input className={`${style.newList__content__title} ${style.inputText}`}
+                        placeholder="Edit the name list..."
+                        value={listTitle}
+                        onChange={(e) => setListTitle(e.target.value)} />
 
-            
-            <div className={style.newList__listItems_content}>
-                {listItems.map((item: ListItem) => (
-                    <ElementItem 
-                        key={item.id}
-                        idList={props.id}
-                        idItem={item.id}
-                        content={item.content}
-                        loadingItens={mutateItem}
-                    />
-                ))}
-            </div>
-            
+                    <input className={`${style.newList__content__description} ${style.inputText}`}
+                        placeholder="Add a description to your list here"
+                        value={listDescription}
+                        onChange={(e) => setListDescription(e.target.value)} />
+                </div>
 
-            <div className={style.newList__form}> 
-                <div className={style.newList__listItem}> 
-                    <div className={style.newList__listItem__content}> 
-                        <input className={`${style.newList__listItem__content__input} ${style.inputText}`}
-                        placeholder="Enter another item to your list"
-                        value={itemContent}
-                        onChange={(e) => setItemContent(e.target.value)}
-                        onKeyUp={getEnter}
+
+                <div className={style.newList__content__listItems_content}>
+                    {listItems.map((item: ListItem) => (
+                        <ElementItem
+                            key={item.id}
+                            idList={props.id}
+                            idItem={item.id}
+                            content={item.content}
+                            loadingItens={mutateItem}
                         />
-                        <button onClick={() => mutateNewItem()} 
-                        className={style.newList__button}
-                        id={style.addItem}
-                        >
-                            <Image
-                                src={check}
-                                alt="Adicionar item à lista"
-                                width={15}
-                                height={15}
-                            />
-                        </button>
-                    </div>
-                
-                    <div> 
-                        <select className={`${style.newList__listItem__category} ${style.inputText}`}
-                        name="category" id="category"
-                        value={listCategory} 
-                        onChange={(e) => setListCategory(e.target.value)}
-                        >
-                            {categories?.map((category) =>{
-                                return(
-                                    <option key={category.id} value={category.id}>{category.name}</option>
-                                )
-                            })}
-                            
-                        </select>
-                    </div>
+                    ))}
                 </div>
 
-                <div className={style.newList__form__buttons}> 
-                    <button className={style.newList__button} id={style.cancelButton} onClick={() => mutate()}> 
-                        <span> Cancel </span>
-                    </button>
-                    <button className={style.newList__button} onClick={() => callUpdateList()}>
-                        <span> Save list </span>
-                    </button>
-                    {visible && <DropdownLoading status={statusUpdateList} operationCompleted={updatedList} />}
+
+                <div className={style.newList__content__form}>
+                    <div className={style.newList__content__listItem}>
+                        <div className={style.newList__content__listItem__content}>
+                            <input className={`${style.newList__content__listItem__content__input} ${style.inputText}`}
+                                placeholder="Enter another item to your list"
+                                value={itemContent}
+                                onChange={(e) => setItemContent(e.target.value)}
+                                onKeyUp={getEnter}
+                            />
+                            <button onClick={() => mutateNewItem()}
+                                className={style.newList__content__button}
+                                id={style.addItem}
+                            >
+                                <Image
+                                    src={check}
+                                    alt="Adicionar item à lista"
+                                    width={15}
+                                    height={15}
+                                />
+                            </button>
+                        </div>
+
+                        <div>
+                            <select className={`${style.newList__content__listItem__category} ${style.inputText}`}
+                                name="category" id="category"
+                                value={listCategory}
+                                onChange={(e) => setListCategory(e.target.value)}
+                            >
+                                {categories?.map((category) => {
+                                    return (
+                                        <option key={category.id} value={category.id}>{category.name}</option>
+                                    )
+                                })}
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div className={style.newList__content__form__buttons}>
+                        <button className={style.newList__content__button} id={style.cancelButton} onClick={() => mutate()}>
+                            <span> Cancel </span>
+                        </button>
+                        <button className={style.newList__content__button} onClick={() => callUpdateList()}>
+                            <span> Save list </span>
+                        </button>
+                        {visible && <DropdownLoading status={statusUpdateList} operationCompleted={updatedList} />}
+                    </div>
                 </div>
-            </div> 
+            </div>
         </div>
+
 
     )
 }

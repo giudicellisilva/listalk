@@ -24,14 +24,23 @@
     }
 
     &__label{
+        min-width: 350px;
         p{
             margin-bottom: 7px;
         }
 
         input{
-            min-width: 350px;
+            width: 100%;
             padding: 7px 12px;
+            box-sizing: border-box;
         }
+    }
+
+    &__category{
+        min-width: 350px;
+        padding: 7px 12px;
+
+        cursor: pointer;
     }
 
     &__button_create{
