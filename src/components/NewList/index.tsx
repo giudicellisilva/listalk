@@ -90,9 +90,9 @@ const NewList = (props: NewListProps) =>{
         <BackgroundDropdownCenter>
             <div className={style.newList}>
                 <button className={style.newList__button_close} onClick={() => props.setVisible(false)}><img src="/assets/close.svg" alt="fechar" /></button>
-                <label htmlFor="email" className={style.newList__label}>
+                <label htmlFor="text" className={style.newList__label}>
                     <p>Name</p>
-                    <input type="email" name="email"  placeholder="Enter your best e-mail" onChange={(e) => setName(e.target.value)} value={name}/>
+                    <input type="text" name="text"  placeholder="Enter your best e-mail" onChange={(e) => setName(e.target.value)} value={name}/>
                 </label>
                 <label htmlFor="description" className={style.newList__label}>
                     <p>Description</p>

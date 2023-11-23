@@ -5,44 +5,97 @@ import { useMutation } from "react-query";
 import { getLists } from "@/api/list/getLists";
 import NewList from "../NewList";
 import Header from "../Header";
+import { getCategory } from "@/api/category/getCategory";
 
-interface ElementList{
+interface ElementList {
     id: string;
     name: string;
     description: string;
-    category: {id: string};
+    category: { id: string };
 }
 
-const PageList = () =>{
-    const [elementsList, setElementsList] = useState<ElementList[]>([]);
-    const [visible, setVisible] = useState(false);
+interface category {
+    id: string;
+    name: string;
+}
 
+const PageList = () => {
+    const [elementsList, setElementsList] = useState<ElementList[]>([]);
+    const [elementsFilter, setElementsFilter] = useState<ElementList[]>([]);
+    const [visible, setVisible] = useState(false);
+    const [categories, setCategories] = useState<category[]>();
+    const [category, setCategory] = useState("0");
+    
     useEffect(() => {
         mutate();
-      },[]);
+        mutateCategory();
+    }, []);
 
-    const {status, mutate} = useMutation(
-        async () =>{
+    useEffect(() => {
+        filterList();
+    }, [category]);
+
+    const { status, mutate } = useMutation(
+        async () => {
             return getLists();
         },
         {
-            onSuccess: (res) =>{
+            onSuccess: (res) => {
                 setElementsList(res.data);
+                setElementsFilter(res.data);
             },
 
-            onError: (error) =>{
+            onError: (error) => {
                 console.log(error)
             }
         }
     )
 
-    return(
-        <div className={style.pageList}> 
+    const { status: statusCategory, mutate: mutateCategory } = useMutation(
+        async () => {
+            return getCategory();
+        },
+        {
+            onSuccess: (res) => {
+                setCategories(res.data)
+            },
+
+            onError: (error) => {
+                console.log(error)
+            }
+        }
+    )
+
+    function filterList(){
+        if(category != "0"){
+            setElementsFilter(elementsList.filter( (element) => element.category.id == category))
+        }else{
+            setElementsFilter(elementsList)
+        }
+    }
+
+    return (
+        <div className={style.pageList}>
             <Header />
             <h2 className={style.pageList__title}>Your lists</h2>
+            <div className={style.pageList__categories}>
+                <select className={style.pageList__categories__category}
+                    name="category" id="category"
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                >
+                    <option key="0" value="0"></option>
+                    {categories?.map((category) => {
+                        return (
+                            <option key={category.id} value={category.id}>{category.name}</option>
+                        )
+                    })}
+
+                </select>
+            </div>
             <div className={style.pageList__content}>
-                {elementsList.map((list) =>{
-                    return(
+                {elementsFilter.map((list) => {
+                    return (
                         <ElementList key={list.id} id={list.id} content={list.name} isClickable={true} loadingLists={mutate} />
                     )
                 })}
@@ -51,7 +104,7 @@ const PageList = () =>{
                 <button className={style.pageList__div__button_newList} onClick={() => setVisible(true)}>Add new list</button>
 
             </div>
-            {visible? <NewList setVisible={setVisible} loadingLists={mutate}></NewList>: false}
+            {visible ? <NewList setVisible={setVisible} loadingLists={mutate}></NewList> : false}
         </div>
     )
 }
