@@ -5,6 +5,7 @@ import {useParams} from "next/navigation";
 
 const PageList = () =>{
     const params = useParams();
+    
     return(
         <List id={params.listId} />
     )

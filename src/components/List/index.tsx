@@ -13,6 +13,7 @@ import { getCategory } from "@/api/category/getCategory";
 import { updateList } from "@/api/list/updateList";
 import DropdownLoading from "../DropdownLoading";
 import Header from "@/components/Header";
+import { useRouter } from 'next/navigation'
 
 interface ListItem {
     id: string;
@@ -47,6 +48,9 @@ const List = (props: ListProps) => {
 
     const [visible, setVisible] = useState(false);
 
+    const router = useRouter()
+
+    
 
     useEffect(() => {
         mutateCategory();
@@ -163,6 +167,11 @@ const List = (props: ListProps) => {
     return (
         <div className={style.newList}>
             <Header />
+
+            <button className={style.newList__button_back} onClick={() => router.back()} >
+                <img src="/assets/goBack.svg" alt="" />
+            </button>
+
             <div className={style.newList__content}>
 
                 <div className={style.newList__content__infos}>

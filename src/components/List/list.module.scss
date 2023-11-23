@@ -10,6 +10,19 @@
   width: 100%;
   height: 100%;
 
+  &__button_back{
+    background: transparent;
+    border: none;
+
+    position: absolute;
+    top: 95px;
+    right: 43px;
+
+    img{
+      height: 50px;
+    }
+  }
+
   &__content {
     width: 100%;
     height: calc(100% - 74px);
