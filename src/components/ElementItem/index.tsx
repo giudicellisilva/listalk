@@ -6,6 +6,7 @@ import { useMutation } from 'react-query';
 import DropdownLoading from '../DropdownLoading';
 import Confirmation from '../Confirmation';
 import { deleteItem } from '@/api/item/deleteItem';
+import EditItem from "../EditItem";
 
 interface ElementItemProps {
     idList: string | string[] | undefined;
@@ -17,6 +18,7 @@ interface ElementItemProps {
 const ElementItem = (props: ElementItemProps) => {
     const [visible, setVisible] = useState(false);
     const [visibleConfirmation, setConfirmationVisible] = useState(false);
+    const [visibleEditItem, setEditItemVisible] = useState(false);
 
     const {status, mutate} = useMutation(
         async () =>{
@@ -41,7 +43,7 @@ const ElementItem = (props: ElementItemProps) => {
 
     return (
         <div className={style.elementItem} >
-            <span className={style.elementItem_content}>
+            <span className={style.elementItem_content} onClick={() => setEditItemVisible(true)}>
                 {props.content}
             </span>
             <Image className={style.elementItem__icon}
@@ -53,6 +55,7 @@ const ElementItem = (props: ElementItemProps) => {
             />
             {visibleConfirmation && <Confirmation confirmação={mutate} cancelamento={setConfirmationVisible} setLoading={setVisible} />}
             {visible && <DropdownLoading status={status} operationCompleted={deletedItem} />}
+            {visibleEditItem && <EditItem idList={props.idList} idItem={props.idItem} content={props.content} loadingItens={props.loadingItens} setVisible={setEditItemVisible} />}
         </div>
     )
 }

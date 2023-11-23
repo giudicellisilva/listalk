@@ -20,8 +20,6 @@ const ElementList = (props: ElementListProps) => {
     const [visible, setVisible] = useState(false);
     const [visibleConfirmation, setConfirmationVisible] = useState(false);
 
-    const clickableClass = props.isClickable ? style.clickable : '';
-
     function routeListeelement(): void {
         push(`/list/${props.id}`)
     }
@@ -49,7 +47,7 @@ const ElementList = (props: ElementListProps) => {
 
     return (
         <div className={style.elementList} >
-            <span className={`${style.elementListContent} ${clickableClass}`} onClick={() => props.isClickable? routeListeelement(): false}>
+            <span className={style.elementListContent} onClick={() => routeListeelement()}>
                 {props.content}
             </span>
             <Image className={style.elementList__icon}

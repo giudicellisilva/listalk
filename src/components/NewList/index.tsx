@@ -71,12 +71,13 @@ const NewList = (props: NewListProps) =>{
     //         }
     //     }
     // )
-    
+
     function ListCreate(){
         mutateNewList();
         setVisible(true);
         
     }
+    
     function ListCreated(){
         props.loadingLists()
         setVisible(false);

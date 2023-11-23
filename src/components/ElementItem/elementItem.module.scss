@@ -14,9 +14,15 @@
     }
   }
   
-  .elementList_content {
+  .elementItem_content {
     text-align: center;
     width: 100%;
+    cursor: pointer;
+
+    &:hover{
+      text-decoration: underline;
+      text-decoration-color: #FF9F1C;
+    }
   }
   
   .clickable {

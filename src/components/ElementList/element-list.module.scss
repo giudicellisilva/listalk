@@ -17,8 +17,10 @@
 .elementListContent {
   text-align: center;
   width: 100%;
-}
-
-.clickable {
   cursor: pointer;
+
+  &:hover{
+    text-decoration: underline;
+    text-decoration-color: #FF9F1C;
+  }
 }
