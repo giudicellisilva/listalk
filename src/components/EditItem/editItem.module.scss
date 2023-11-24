@@ -3,20 +3,31 @@
     background-color: #D9D9D9;
         
     border-radius: 12px;
-    padding: 12px;
+    padding: 32px;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+    position: absolute;
+
+    &__form{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+
+        &__error{
+            font-size: small;
+            color: red;
+            display: block;
+        }
+    }
 
     &__button_close{
         background-color: transparent;
         border: none;
 
-        position: relative;
-        left: 47%;
+        position: absolute;
+        top: 3px;
+        right: 5px;
 
         img{
             height: 32px;

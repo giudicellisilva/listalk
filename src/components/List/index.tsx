@@ -38,7 +38,7 @@ const List = (props: ListProps) => {
     const categories: category[] = useSelector((state: RootState) => state.categories);
 
     const [listItems, setListItems] = useState<ListItem[]>([]);
-
+    const [error, setError] = useState("");
     const [listTitle, setListTitle] = useState('');
     const [listDescription, setListDescription] = useState('');
     const [listCategory, setListCategory] = useState("");
@@ -134,7 +134,17 @@ const List = (props: ListProps) => {
 
     const getEnter = (e: any) => {
         if (e.key === "Enter") {
+            validateNewItem();
+        }
+    }
+
+    function validateNewItem(){
+        if(itemContent == ""){
+            setError("Required")
+        } else{
+            setError("")
             mutateNewItem();
+
         }
     }
 
@@ -192,7 +202,8 @@ const List = (props: ListProps) => {
                                 onChange={(e) => setItemContent(e.target.value)}
                                 onKeyUp={getEnter}
                             />
-                            <button onClick={() => mutateNewItem()}
+                            
+                            <button onClick={() => validateNewItem()}
                                 className={style.newList__content__button}
                                 id={style.addItem}
                             >
@@ -204,7 +215,7 @@ const List = (props: ListProps) => {
                                 />
                             </button>
                         </div>
-
+                        {error && <span>{error}</span>}
                         <div>
                             <select className={`${style.newList__content__listItem__category} ${style.inputText}`}
                                 name="category" id="category"

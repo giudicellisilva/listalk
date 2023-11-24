@@ -5,9 +5,7 @@ import { useMutation } from "react-query";
 import { getLists } from "@/api/list/getLists";
 import NewList from "../NewList";
 import Header from "../Header";
-import { getCategory } from "@/api/category/getCategory";
-import { useDispatch, useSelector } from 'react-redux';
-import { setArray } from '@/redux/categories/categoriesSlice';
+import { useSelector } from 'react-redux';
 import type { RootState} from '@/redux/store';
 
 interface ElementList {
@@ -28,11 +26,9 @@ const PageList = () => {
     const [visible, setVisible] = useState(false);
     const [category, setCategory] = useState("0");
     const categories: category[] = useSelector((state: RootState) => state.categories);
-    const dispatch = useDispatch();
     
     useEffect(() => {
         mutate();
-        mutateCategory();
     }, []);
 
     useEffect(() => {
@@ -47,21 +43,6 @@ const PageList = () => {
             onSuccess: (res) => {
                 setElementsList(res.data);
                 setElementsFilter(res.data);
-            },
-
-            onError: (error) => {
-                console.log(error)
-            }
-        }
-    )
-
-    const { status: statusCategory, mutate: mutateCategory } = useMutation(
-        async () => {
-            return getCategory();
-        },
-        {
-            onSuccess: (res) => {
-                dispatch(setArray(res.data))
             },
 
             onError: (error) => {
