@@ -215,7 +215,7 @@ const List = (props: ListProps) => {
                                 />
                             </button>
                         </div>
-                        {error && <span>{error}</span>}
+                        {error && <span className={style.error}>{error}</span>}
                         <div>
                             <select className={`${style.newList__content__listItem__category} ${style.inputText}`}
                                 name="category" id="category"

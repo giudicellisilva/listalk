@@ -32,7 +32,8 @@ const Login = (props: LoginProps) =>{
                 api.defaults.headers.authorization = `Bearer ${res.data.access_token}`;
                 setStorageItem("token", res.data.access_token)
                 push(APP_ROUTES.private.list.name);
-                dispatch(setUserLogin(login))
+                dispatch(setUserLogin(login));
+                setStorageItem("userlogin", login);
             },
 
             onError: (erro) =>{
