@@ -14,6 +14,9 @@ import { updateList } from "@/api/list/updateList";
 import DropdownLoading from "../DropdownLoading";
 import Header from "@/components/Header";
 import { useRouter } from 'next/navigation'
+import { useSelector } from 'react-redux';
+import type { RootState} from '@/redux/store'
+import { category } from "@/interfaces/Category";
 
 interface ListItem {
     id: string;
@@ -31,18 +34,14 @@ interface ListProps {
     id: string | string[] | undefined;
 }
 
-interface category {
-    id: string;
-    name: string;
-}
-
 const List = (props: ListProps) => {
-    const [categories, setCategories] = useState<category[]>();
+    const categories: category[] = useSelector((state: RootState) => state.categories);
+
     const [listItems, setListItems] = useState<ListItem[]>([]);
 
     const [listTitle, setListTitle] = useState('');
     const [listDescription, setListDescription] = useState('');
-    const [listCategory, setListCategory] = useState('movies');
+    const [listCategory, setListCategory] = useState("");
 
     const [itemContent, setItemContent] = useState('');
 
@@ -53,7 +52,6 @@ const List = (props: ListProps) => {
     
 
     useEffect(() => {
-        mutateCategory();
         mutate();
         mutateItem();
     }, []);
@@ -134,21 +132,6 @@ const List = (props: ListProps) => {
         }
     )
 
-    const { status: statusCategory, mutate: mutateCategory } = useMutation(
-        async () => {
-            return getCategory();
-        },
-        {
-            onSuccess: (res) => {
-                setCategories(res.data)
-            },
-
-            onError: (error) => {
-                console.log(error)
-            }
-        }
-    )
-
     const getEnter = (e: any) => {
         if (e.key === "Enter") {
             mutateNewItem();
@@ -169,7 +152,7 @@ const List = (props: ListProps) => {
             <Header />
 
             <button className={style.newList__button_back} onClick={() => router.back()} >
-                <img src="/assets/goBack.svg" alt="" />
+                <img src="/assets/Back Arrow.svg" alt="" />
             </button>
 
             <div className={style.newList__content}>

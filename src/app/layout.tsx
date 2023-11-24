@@ -4,9 +4,10 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import PrivateRoute from '@/components/PrivateRoute'
-import Provider from '@/components/Provider';
+import ProviderQuery from '@/components/ProviderQuery';
 import { usePathname } from 'next/navigation';
 import { checkIsPublicRoute } from '@/functions/checkIsPublicRoute';
+import ProviderRedux from '@/components/ProviderRedux';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,14 +27,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Provider>
-          {isPlublicPage && children}
-          {!isPlublicPage && (
-            <PrivateRoute>
-              {children}
-            </PrivateRoute>
-          )}
-        </Provider>
+        <ProviderQuery>
+          <ProviderRedux>
+            {isPlublicPage && children}
+            {!isPlublicPage && (
+              <PrivateRoute>
+                {children}
+              </PrivateRoute>
+            )}
+          </ProviderRedux>
+        </ProviderQuery>
       </body>
     </html>
   )

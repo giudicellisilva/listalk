@@ -4,10 +4,13 @@ import { useMutation } from "react-query";
 import { postLogout } from "@/api/login/postLogout";
 import { removeStorageItem } from "@/utils/localStore";
 import { useRouter } from "next/navigation";
+import {useSelector} from "react-redux";
+import type { RootState } from "@/redux/store";
 
 const Header = () =>{
     const {push} = useRouter();
     const [visible, setVisible] = useState(false);
+    const userLogin: string = useSelector((state: RootState) => state.userLogin);
 
     function visibleOrnotvisible(){
         if(visible){
@@ -46,6 +49,7 @@ const Header = () =>{
             </button>
             {visible ? <div className={style.header__userLogin}>
                 <img src="/assets/User.svg" alt="" />
+                <p>{userLogin}</p>
                 <button onClick={logout}>Logout</button>
             </div> : false}
   

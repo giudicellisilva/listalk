@@ -7,6 +7,9 @@ import { postLogin } from "@/api/login/postLogin";
 import { useRouter } from "next/navigation";
 import { APP_ROUTES } from "@/constants/app-routes";
 import { setStorageItem } from "@/utils/localStore";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState} from '@/redux/store'
+import { setUserLogin } from "@/redux/userLogin/userLoginSlice";
 
 interface LoginProps{
     setVisibleLogin: (set: boolean)  => void;
@@ -17,16 +20,19 @@ const Login = (props: LoginProps) =>{
     const [password, setPassword] = useState("");
     const {push} = useRouter();
 
+    const userLogin: string = useSelector((state: RootState) => state.userLogin);
+    const dispatch = useDispatch();
+
     const {status, mutate} = useMutation(
         async () =>{
             return postLogin(login, password);
         },
         {
             onSuccess: (res) =>{
-                console.log(res.data)
                 api.defaults.headers.authorization = `Bearer ${res.data.access_token}`;
-                console.log(setStorageItem("token", res.data.access_token))
+                setStorageItem("token", res.data.access_token)
                 push(APP_ROUTES.private.list.name);
+                dispatch(setUserLogin(login))
             },
 
             onError: (erro) =>{

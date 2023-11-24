@@ -6,6 +6,9 @@ import { getLists } from "@/api/list/getLists";
 import NewList from "../NewList";
 import Header from "../Header";
 import { getCategory } from "@/api/category/getCategory";
+import { useDispatch, useSelector } from 'react-redux';
+import { setArray } from '@/redux/categories/categoriesSlice';
+import type { RootState} from '@/redux/store';
 
 interface ElementList {
     id: string;
@@ -23,8 +26,9 @@ const PageList = () => {
     const [elementsList, setElementsList] = useState<ElementList[]>([]);
     const [elementsFilter, setElementsFilter] = useState<ElementList[]>([]);
     const [visible, setVisible] = useState(false);
-    const [categories, setCategories] = useState<category[]>();
     const [category, setCategory] = useState("0");
+    const categories: category[] = useSelector((state: RootState) => state.categories);
+    const dispatch = useDispatch();
     
     useEffect(() => {
         mutate();
@@ -57,7 +61,7 @@ const PageList = () => {
         },
         {
             onSuccess: (res) => {
-                setCategories(res.data)
+                dispatch(setArray(res.data))
             },
 
             onError: (error) => {
@@ -105,6 +109,7 @@ const PageList = () => {
 
             </div>
             {visible ? <NewList setVisible={setVisible} loadingLists={mutate}></NewList> : false}
+            {/* {visible ? <SignupForm /> : false} */}
         </div>
     )
 }

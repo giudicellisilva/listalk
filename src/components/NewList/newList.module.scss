@@ -3,20 +3,30 @@
     background-color: #D9D9D9;
         
     border-radius: 12px;
-    padding: 12px;
+    padding: 32px;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+    position: absolute;
+
+    &__form{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+
+        &__error{
+            font-size: small;
+            color: red;
+        }
+    }
 
     &__button_close{
         background-color: transparent;
         border: none;
 
-        position: relative;
-        left: 47%;
+        position: absolute;
+        top: 5px;
+        right: 10px;
 
         img{
             height: 32px;
@@ -24,7 +34,7 @@
     }
 
     &__label{
-        min-width: 350px;
+        width: 70%;
         p{
             margin-bottom: 7px;
         }
@@ -37,7 +47,8 @@
     }
 
     &__category{
-        min-width: 350px;
+        width: 100%;
+
         padding: 7px 12px;
 
         cursor: pointer;
