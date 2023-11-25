@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const counterSlice = createSlice({
   name: 'userLogin', // nome do reducer
-  initialState: getStorageItem("userlogin"), // estado inicial
+  initialState: getStorageItem("userlogin") || "", // estado inicial
   reducers: {
     setUserLogin(state, actions) {
       return state = actions.payload;
