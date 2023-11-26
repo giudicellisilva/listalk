@@ -7,18 +7,26 @@
     justify-content: space-evenly;
     align-items: center;
 
+    &__form {
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        gap: 2rem;
+    }
+
     &__title{
         .title{
             color: #FFBF68;
+            text-shadow: 1px 0 #919090;
             font-size: 52px;
         }
         
         .subtitle{
+            margin-top: 5px;
+            font-size: 20px;
             text-align: center;
         }
     }
-
-
     
     &__content{
         width: 100%;
@@ -39,7 +47,7 @@
             border: none;
 
             position: relative;
-            bottom: 20px;
+            bottom: 120px;
             left: 47%;
 
             img{
@@ -56,6 +64,12 @@
                 min-width: 350px;
                 padding: 7px 12px;
                 height: 22px;
+                border: 1px #FF9F1C solid;
+                border-radius: 8px;
+
+                &:focus {
+                    outline: none;
+                }
             }
         }
 
@@ -69,10 +83,9 @@
             border: none;
             border-radius: 6px;
             position: relative;
-            left: 124px;
             font-size: 16px;
             font-weight: 600;
-
+            width: 100%;
 
             &:hover{
                 transition: all .4s;
