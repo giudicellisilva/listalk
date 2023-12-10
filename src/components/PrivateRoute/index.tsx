@@ -10,6 +10,8 @@ import { getCategory } from "@/api/category/getCategory";
 import { useDispatch, useSelector } from 'react-redux';
 import { setArray } from '@/redux/categories/categoriesSlice';
 import type { RootState} from '@/redux/store';
+import { postValidateToken } from "@/api/login/postValidateToken";
+import { error } from "console";
 
 interface category {
     id: string;
@@ -28,14 +30,35 @@ const PrivateRoute = (props: PrivateRouteProps) =>{
     const {push} = useRouter()
     
     useEffect(() =>{
+        console.log("token", token)
         api.defaults.headers.authorization = `Bearer ${token}`;
         if(token != undefined){
-            mutateCategory();
+            mutate();
         }else{
             push(APP_ROUTES.public.home);
         }
 
     }, []);
+
+    const { status , mutate} = useMutation(
+        async () =>{
+            return postValidateToken(token);
+           
+        },
+        {
+            onSuccess: (res) =>{
+                console.log(res.data)
+                setAuthorized(true);
+            },
+
+            onError: (error) =>{
+
+                console.log(error)
+            }
+        }
+    )
+
+
 
     const { status: statusCategory, mutate: mutateCategory } = useMutation(
         async () => {
